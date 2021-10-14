@@ -31,16 +31,16 @@ def request(url): # replacment for requests.get(url)
     SendInput(Keyboard(VK_CONTROL,KEYEVENTF_KEYUP))
     return pyperclip.paste()
 
+URL = "https://www.njuskalo.hr/index.php?ctl=search_ads&keywords=ddr3+ecc&categoryId=9596&page="
+
+
 lookup = {"32GB":[],"16GB":[],"8GB":[],"4GB":[],"2GB":[],"1GB":[]}
 
-
-url="https://www.njuskalo.hr/index.php?ctl=search_ads&keywords=ddr3+ecc&categoryId=9596&page="
-
 for page in range(1,5):
-    html = request(url+str(page))
+    html = request(URL+str(page))
     soup = BeautifulSoup(html, 'html.parser')
     for tag in soup.findAll("h3",{"class":"entity-title"}):
-        for i,j in enumerate(lookup.keys()):
+        for j in lookup.keys():
             if j in tag.text.upper().replace(' ',''):
                 try:
                     price = [int(s) for s in tag.parent.find("strong",{"class":"price price--hrk"}).text.split() if s.isdigit()][0]
